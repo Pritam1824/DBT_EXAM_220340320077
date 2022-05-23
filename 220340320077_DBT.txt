@@ -1,0 +1,113 @@
+
+-- que 1)
+create table DEPT
+(
+	DEPTNO int,
+    DNAME varchar(15),
+    LOC varchar(10)
+);
+
+
+insert into DEPT(DEPTNO,DNAME,LOC)
+values
+(10, 'ACCOUNTING', 'NEW YORK'),
+(20,'RESEARCH' ,'DALLAS'),
+(30,'SALES' ,'CHICAGO'),
+(40,'OPERATIONS' ,'BOSTON');
+select * from dept;
+
+-- que 2)
+create table EMP
+(
+EMPNO int,
+ENAME varchar(10),
+JOB varchar(9),
+HIREDATE date,
+SAL float,
+COMM float,
+DEPTNO int
+);
+
+insert into EMP(EMPNO,ENAME,JOB,HIREDATE,SAL,COMM,DEPTNO)
+values
+(7839, 'KING', 'MANAGER', '1991-11-17' ,5000, NULL, 10),
+(7698 ,'BLAKE', 'CLERK', '1981-05-01', 2850 ,NULL ,30),
+(7782 ,'CLARK', 'MANAGER', '1981-06-09' ,2450 ,NULL, 10),
+(7566 ,'JONES' ,'CLERK', '1981-04-02', 2975, NULL, 20),
+(7654, 'MARTIN', 'SALESMAN', '1981-09-28', 1250, 1400, 30),
+(7499, 'ALLEN' ,'SALESMAN', '1981-02-20' ,1600, 300 ,30);
+select * from emp;
+
+-- 3. Display all the employees where SAL between 2500 and 5000 (inclusive of both).
+				select sal from emp 
+				where sal between 2500 and 5000;
+
+-- 4. Display all the ENAMEs in descending order of ENAME.
+				select ename from emp
+				order by ename desc;
+
+-- 5. Display all the JOBs in lowercase.
+				select lower(job) from emp;
+
+-- 6. Display the ENAMEs and the lengths of the ENAMEs.
+				select ename,length(ename) from emp;
+
+-- 7. Display the DEPTNO and the count of employees who belong to that DEPTNO .
+				select deptno,count(empno) as "EMP COUNT" from emp
+				group by deptno;
+
+-- 8. Display the DNAMEs and the ENAMEs who belong to that DNAME.
+				select dname,ename from emp,dept
+                where emp.deptno = dept.deptno;
+                
+-- 9. Display the position at which the string ‘AR’ occurs in the ename.
+				select instr(ename,'AR') from emp;
+
+-- 10. Display the HRA for each employee given that HRA is 20% of SAL
+				select sal*0.2 as "HRA" from emp;
+                
+  #======================                section 2              =========================         
+  /*
+que 1 -- answer
+*/
+
+delimiter //
+create procedure PROC1(string1 varchar(20),string2 varchar(20))
+begin
+		if locate(string1,string2)  then 
+				insert into tempp values('FOUND');
+		else		
+				insert into tempp values('NOT FOUND');
+		end if;
+end; //
+delimiter ;
+
+call PROC1('DAC','CDAC');
+select * from tempp;
+create table tempp
+(
+	result varchar(30)
+);
+drop table tempp;
+
+
+
+
+/*
+que 2 -- answer
+*/
+
+delimiter //
+create function FUNC1(a int,b int,c int)
+returns boolean
+deterministic
+begin
+		if ( (a+b)>c and (b+c)>a and (c+a)>b ) then
+				return TRUE;
+		else	
+				return FALSE;
+		end if;
+end; //
+delimiter ;
+
+
